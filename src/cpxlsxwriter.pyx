@@ -35,11 +35,16 @@ cdef class Format:
     #     return func
 
 cdef class WorkSheet:
-    cdef cp.lxw_worksheet *_c_worksheet
-    cdef cp.lxw_format *_c_format
+    cdef:
+        cp.lxw_worksheet *_c_worksheet
+        cp.lxw_format *_c_format
+
     def __cinit__(self, WorkBook workbook, str sheetname):
         self._c_worksheet = cp.workbook_add_worksheet(workbook._c_workbook, sheetname)
         self._c_format = NULL
+
+    def write(self, cp.lxw_row_t row, cp.lxw_col_t col, string):
+        cp.worksheet_write_string(self._c_worksheet, row, col, str(string), self._c_format)
 
     def write_string(self, cp.lxw_row_t row, cp.lxw_col_t col, str string):
         cp.worksheet_write_string(self._c_worksheet, row, col, string, self._c_format)
@@ -52,6 +57,14 @@ cdef class WorkSheet:
 
     def set_column(self, cp.lxw_col_t first_col, cp.lxw_col_t last_col, double width):
         cp.worksheet_set_column(self._c_worksheet, first_col, last_col, width, self._c_format)
+
+    def write_row(self, int first_col, int last_col, int row, data_set):
+        for col, data in zip(range(first_col, last_col), data_set):
+            cp.worksheet_write_string(self._c_worksheet, row, col, data, self._c_format)
+
+    def write_col(self, int first_row, int last_row, int col, data_set):
+        for row, data in zip(range(first_row, last_row), data_set):
+            cp.worksheet_write_string(self._c_worksheet, row, col, data, self._c_format)
 
 
 cdef class Chart:
