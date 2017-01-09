@@ -4,16 +4,17 @@
 #         library_dirs=['/home/linlin/Desktop/libxlsxwriter-master/lib'],
 #         libraries=['xlsxwriter'])])
 
+# import setuptools
 from distutils.core import setup
 from distutils.extension import Extension
 from Cython.Build import cythonize
 
 
 ext_modules = cythonize([
-    Extension("excel", ["excel.pyx"],
-              libraries=["xlsxwriter"], include_dirs=['include'])])
+    Extension("cpxlsxwriter", ["src/cpxlsxwriter.pyx"],
+              libraries=["xlsxwriter"])])
 
 setup(
-  name = "py_c_xlsxwriter",
+  name = "cpxlsxwriter",
   ext_modules = cythonize(ext_modules)
 )

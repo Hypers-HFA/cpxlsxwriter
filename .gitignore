@@ -1,0 +1,7 @@
+build
+*.c
+*.egg-info*
+dist
+*.xlsx
+*.pyc
+*.so
