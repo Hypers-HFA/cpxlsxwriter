@@ -1,20 +1,12 @@
-# from distutils.core import setup, Extension
-# setup(name='helloworld', version='1.0',\
-#         ext_modules=[Extension('helloworld', ['hello.c'], \
-#         library_dirs=['/home/linlin/Desktop/libxlsxwriter-master/lib'],
-#         libraries=['xlsxwriter'])])
-
-# import setuptools
-from distutils.core import setup
-from distutils.extension import Extension
 from Cython.Build import cythonize
 
+from distutils.core import setup
+from distutils.extension import Extension
 
 ext_modules = cythonize([
-    Extension("cpxlsxwriter", ["src/cpxlsxwriter.pyx"],
-              libraries=["xlsxwriter"])])
+    Extension("cpexcel", ["src/cpexcel.pyx"], libraries=["xlsxwriter"])])
 
 setup(
-  name = "cpxlsxwriter",
+  name = "cpexcel",
   ext_modules = cythonize(ext_modules)
 )
