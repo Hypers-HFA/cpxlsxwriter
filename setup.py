@@ -5,7 +5,8 @@ import sys
 from distutils.core import setup
 from distutils.extension import Extension
 
-if 'build_ext' in sys.argv:
+if 'install' in sys.argv:
+    subprocess.call(['python', 'setup.py', 'build_ext', '--inplace'])
     subprocess.call(['wget', 'https://github.com/jmcnamara/libxlsxwriter/archive/master.zip'])
     subprocess.call(['unzip', 'master.zip'])
     subprocess.call(['cd', 'libxlsxwriter-master', '&&', 'make', '&&', 'make install'])
