@@ -13,10 +13,11 @@ def lib():
     subprocess.call(
         'cd libxlsxwriter-master && make && make install', shell=True)
     subprocess.call('rm -rf libxlsxwriter-master && rm master.zip', shell=True)
+    subprocess.call('cp /usr/local/lib/libxlsxwriter.so /usr/lib', shell=True)
     subprocess.call('python setup.py build_ext --inplace', shell=True)
 
 
-if 'install' in sys.argv:
+if 'build_ext' not in sys.argv:
     lib()
 ext_modules = cythonize(
     [Extension("cpexcel", ["src/cpexcel.pyx"], libraries=["xlsxwriter"])])
