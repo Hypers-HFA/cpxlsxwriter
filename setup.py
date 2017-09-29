@@ -7,13 +7,10 @@ from distutils.extension import Extension
 
 
 def lib():
-    subprocess.call(
-        'wget https://github.com/jmcnamara/libxlsxwriter/archive/master.zip && unzip master.zip',
-        shell=True)
-    subprocess.call(
-        'cd libxlsxwriter-master && make && make install', shell=True)
-    subprocess.call('rm -rf libxlsxwriter-master && rm master.zip', shell=True)
-    subprocess.call('cp /usr/local/lib/libxlsxwriter.so /usr/lib', shell=True)
+    mkdir = 'mkdir -p /usr/include && mkdir -p /usr/lib'
+    cp = 'cp lib/* /usr/lib/ && cp include/* /usr/include/'
+    subprocess.call(mkdir, shell=True)
+    subprocess.call(cp, shell=True)
     subprocess.call('python setup.py build_ext --inplace', shell=True)
 
 
